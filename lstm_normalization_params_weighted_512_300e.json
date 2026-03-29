@@ -1,0 +1,10 @@
+{
+  "input_size": 9,
+  "hidden_size": 128,
+  "num_layers": 2,
+  "output_size": 4,
+  "best_val_loss": 6.47694150757161e-07,
+  "best_epoch": 211,
+  "test_loss": 6.513770358651527e-07,
+  "weight_alpha": 2.0
+}

@@ -7,7 +7,7 @@
 #define SERVO_CHANNEL 0    // Канал PCA9685
 
 // Пин потенциометра
-const int potPin = A1;
+const int potPin = A0;
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 

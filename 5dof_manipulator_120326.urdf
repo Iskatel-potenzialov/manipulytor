@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<robot name="5DOF_manipulator">
+
+  <!-- ==================================================================== -->
+  <!-- БАЗОВАЯ ПЛАТФОРМА (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- ==================================================================== -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.08 0.08 0.08"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 0.5"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.08 0.08 0.08"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 1 (СЕРВО 1) - ПОВОРОТ БАЗЫ (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- ==================================================================== -->
+  <joint name="joint1" type="revolute">
+    <origin xyz="0 0 0.08" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link1 (Синий блок) -->
+  <link name="link1">
+    <visual>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.02"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 0.9"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.005" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 2 (СЕРВО 2) - НАКЛОН (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- ==================================================================== -->
+  <joint name="joint2" type="revolute">
+    <origin xyz="0 0 0.02" rpy="0 0 0"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link2 (Зелёный блок ~105 мм) -->
+  <link name="link2">
+    <visual>
+      <origin xyz="0 0 0.0525" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.105"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 0.9"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0525" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.105"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0002"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 3 (СЕРВО 3) - НАКЛОН (БЕЗ ИЗМЕНЕНИЙ) -->
+  <!-- ==================================================================== -->
+  <joint name="joint3" type="revolute">
+    <origin xyz="0 0 0.105" rpy="0 0 0"/>
+    <parent link="link2"/>
+    <child link="link3"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link3 (Красный блок ~100 мм) -->
+  <link name="link3">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.10"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 0.9"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.10"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <inertia ixx="0.0003" ixy="0" ixz="0" iyy="0.0003" iyz="0" izz="0.0003"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 4 (СЕРВО 4) - НАКЛОН (БЕЗ ИЗМЕНЕНИЙ! НЕТ СМЕЩЕНИЯ) -->
+  <!-- ==================================================================== -->
+  <joint name="joint4" type="revolute">
+    <!-- ✅ БЕЗ ИЗМЕНЕНИЙ: xyz="0 0 0.10" (жёлтый блок на одной оси с красным!) -->
+    <origin xyz="0 0 0.10" rpy="0 0 0"/>
+    <parent link="link3"/>
+    <child link="link4"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link4 (Жёлтый блок - 30 мм от Joint 4, на одной оси Z с красным) -->
+  <link name="link4">
+    <visual>
+      <!-- ✅ Половина длины: 30 мм / 2 = 15 мм = 0.015 м -->
+      <origin xyz="0 0 0.015" rpy="0 0 0"/>
+      <!-- ✅ Длина: 30 мм = 0.03 м -->
+      <geometry>
+        <box size="0.025 0.05 0.03"/>
+      </geometry>
+      <material name="yellow">
+        <color rgba="1 1 0 0.9"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.015" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.05 0.03"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 5 (СЕРВО 5) - ФИКСИРОВАН + СМЕЩЕНИЕ 25 ММ НАЗАД (ИЗМЕНЕНО!) -->
+  <!-- ==================================================================== -->
+  <!-- ✅ ИЗМЕНЕНО: type="fixed" (был revolute) -->
+  <joint name="joint5" type="fixed">
+    <!-- ✅ СМЕЩЕНИЕ: x="-0.025" (25 мм назад), z="0.03" (конец жёлтого) -->
+    <origin xyz="-0.025 0 0.00" rpy="0 0 0"/>
+    <parent link="link4"/>
+    <child link="link5"/>
+  </joint>
+
+  <!-- ==================================================================== -->
+  <!-- LINK 5 (ЧЁРНАЯ КЛЕШНЯ - 160 мм с перекрытием 25 мм) -->
+  <!-- ==================================================================== -->
+  <link name="link5">
+    <visual>
+      <!-- ✅ Половина длины: 160 мм / 2 = 80 мм = 0.08 м -->
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <!-- ✅ Длина: 160 мм = 0.16 м -->
+      <geometry>
+        <box size="0.02 0.02 0.15"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 0.8"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.02 0.15"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- ==================================================================== -->
+  <!-- JOINT 6 (ФИКСИРОВАННЫЙ) - ТОЧКА ДЛЯ IK НА КОНЦЕ КЛЕШНИ -->
+  <!-- ==================================================================== -->
+  <joint name="joint6" type="fixed">
+    <!-- ✅ 150 мм точки траектории  -->
+    <origin xyz="0 0 0.150" rpy="0 0 0"/> 
+    <parent link="link5"/>
+    <child link="end_effector"/>
+  </joint>
+
+  <!-- ==================================================================== -->
+  <!-- END EFFECTOR (ЗЕЛЁНАЯ ТОЧКА В СИМУЛЯЦИИ) 0.0075 --> 
+  <!-- ==================================================================== -->
+  <link name="end_effector">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0075"/>
+      </geometry>
+      <material name="orange">
+        <color rgba="0 0 1 0.5"/>
+      </material>
+    </visual>
+  </link>
+
+</robot>

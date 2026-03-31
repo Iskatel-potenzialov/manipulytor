@@ -154,9 +154,9 @@ print("   ✅ Функции конвертации готовы (включая
 # 4. ПОЗИЦИИ РОБОТА (теперь 5 углов)
 # ============================================================================
 
-HOME_REAL_DEG = [65, 115, 92, 110, 90]      # Базовая точка, клешня 90°
+HOME_REAL_DEG = [65, 115, 92, 110, 90]      # Базовая точка, захват 90°
 POINT2_REAL_DEG = [55, 81, 60, 103, 90]     # Точка 15 
-POINT1_REAL_DEG = [36, 86, 65, 103, 140]    # Точка 5
+POINT1_REAL_DEG = [36, 86, 65, 103, 128]    # Точка 5
 
 # Преобразование в URDF координаты (градусы) для всех 5 серво
 HOME_URDF_DEG = [real_to_urdf(HOME_REAL_DEG[i], i+1) for i in range(5)]
@@ -686,7 +686,7 @@ if LOAD_TRAJECTORIES:
         print("\n⏸️ Пауза 2 секунды перед захватом...")
         time.sleep(2)
         new_angles = robot.current_angles.copy()
-        new_angles[4] = 140.0
+        new_angles[4] = 128.0
         prev_angles = robot.current_angles.copy()
         robot.set_servo_angles(new_angles)
         delay = robot.calculate_delay(prev_angles, new_angles)
@@ -701,7 +701,7 @@ if LOAD_TRAJECTORIES:
 
     # 2. POINT1 → HOME (с изменённым углом клешни)
     point1_after_grasp = POINT1_REAL_DEG.copy()
-    point1_after_grasp[4] = 140.0
+    point1_after_grasp[4] = 128.0
     run_trajectory(point1_after_grasp, HOME_REAL_DEG, "POINT1 → HOME (загружено)", precomputed_trajectory=loaded_trajectories[1])
 
     print("\n⏸️ Пауза 2 секунд...")
@@ -756,7 +756,7 @@ else:
         print("\n⏸️ Пауза 2 секунды перед захватом...")
         time.sleep(2)
         new_angles = robot.current_angles.copy()
-        new_angles[4] = 140.0
+        new_angles[4] = 128.0
         prev_angles = robot.current_angles.copy()
         robot.set_servo_angles(new_angles)
         delay = robot.calculate_delay(prev_angles, new_angles)
@@ -771,7 +771,7 @@ else:
 
     # 2. POINT1 → HOME
     point1_after_grasp = POINT1_REAL_DEG.copy()
-    point1_after_grasp[4] = 140.0
+    point1_after_grasp[4] = 128.0
     run_trajectory(point1_after_grasp, HOME_REAL_DEG, "POINT1 → HOME")
     all_trajectories.append(trajectory_angles.copy())
 

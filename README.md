@@ -1,9 +1,7 @@
 # manipulytor
-Робот-манипулятор
+**Робот-манипулятор**
 
 Подробности на Хабр: https://habr.com/ru/articles/1017826/
-
-![Uploading image.png…]()
 
 
 Техника безопасности
